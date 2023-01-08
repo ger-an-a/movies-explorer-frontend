@@ -45,15 +45,15 @@
 
 @media (max-width: 800px) {
     .page404 {
-        height: 61.55vh;
-        padding: 39.85vh 0 21.7vh;
+        height: 394px;
+        padding: 408px 0 222px;
     }
 }
 
 @media (max-width: 500px) {
     .page404 {
-        height: 61.55vh;
-        padding: 42.17vh 0 3.85vh;
+        height: 421px;
+        padding: 329px 0 30px;
     }
 
     .page404__title {

@@ -1,13 +1,10 @@
-.background {
-    background-color: #202020;
-}
-
 .page {
     width: 100%;
+    background-color: #202020;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin: 0 auto;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', Arial, sans-serif;
     min-height: 100vh;
     display: flex;
     flex-direction: column;

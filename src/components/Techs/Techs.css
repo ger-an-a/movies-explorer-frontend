@@ -90,6 +90,7 @@
 @media (max-width:550px) {
     .techs {
         padding: 70px 0;
+        background-color: #202020;
     }
 
     .techs__section-title {

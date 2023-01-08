@@ -8,10 +8,10 @@
     border-top: solid 1px #424242;
 }
 
-@media(max-width:768px) {
+@media(max-width:1000px) {
     .movies-card-list {
-        grid-template-columns: repeat(auto-fit, 339px);
-        gap: 30px 36px;
+        grid-template-columns: repeat(auto-fill, 339px);
+        gap: 36px 30px;
     }
 }
 

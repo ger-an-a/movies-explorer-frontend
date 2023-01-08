@@ -100,7 +100,7 @@
         display: grid;
         grid-template-columns: auto;
         grid-template-rows: 28px repeat(2, min-content) auto;
-        gap: 16px;
+        gap: 28px;
         background: #202020;
         position: fixed;
         z-index: 3;
@@ -139,16 +139,22 @@
         width: 44px;
         height: 44px;
         padding: 0;
-        margin: 0;
+        margin: -3px 0;
         background-position: center;
         background-size: contain;
-        position: fixed;
+        position: static;
         display: flex;
         z-index: 3;
     }
 
-    .navigation__menu-btn_close {
+    .navigation__menu-btn_cross {
+        position: fixed;
         background-image: url(../../images/close-btn.svg);
+        width: 30px;
+        height: 30px;
+        position: fixed;
+        right: 22.44px;
+        top: 22.44px;
     }
 
     .navigation__link_type_menu {
@@ -195,5 +201,11 @@
     .navigation__menu-btn {
         width: 40px;
         height: 43px;
+        background-size: 34px;
+        background-repeat: no-repeat;
+    }
+
+    .navigation__authbar {
+        gap: 14px
     }
 }

@@ -12,41 +12,39 @@ import Header from '../Header/Header';
 
 function App() {
     return (
-        <div className='background'>
-            <div className='page'>
-                <BrowserRouter>
-                    <Switch>
-                        <Route exact path='/'>
-                            <Header loggedIn={false} />
-                            <Main />
-                            <Footer />
-                        </Route>
-                        <Route path='/movies'>
-                            <Header loggedIn={true} />
-                            <Movies />
-                            <Footer />
-                        </Route>
-                        <Route path='/saved-movies'>
-                            <Header loggedIn={true} />
-                            <SavedMovies />
-                            <Footer />
-                        </Route>
-                        <Route path='/profile'>
-                            <Header loggedIn={true} />
-                            <Profile />
-                        </Route>
-                        <Route path='/signin'>
-                            <Login />
-                        </Route>
-                        <Route path='/signup'>
-                            <Register />
-                        </Route>
-                        <Route path="*">
-                            <PageNotFound />
-                        </Route>
-                    </Switch>
-                </BrowserRouter>
-            </div>
+        <div className='page'>
+            <BrowserRouter>
+                <Switch>
+                    <Route exact path='/'>
+                        <Header loggedIn={false} />
+                        <Main />
+                        <Footer />
+                    </Route>
+                    <Route path='/movies'>
+                        <Header loggedIn={true} />
+                        <Movies />
+                        <Footer />
+                    </Route>
+                    <Route path='/saved-movies'>
+                        <Header loggedIn={true} />
+                        <SavedMovies />
+                        <Footer />
+                    </Route>
+                    <Route path='/profile'>
+                        <Header loggedIn={true} />
+                        <Profile />
+                    </Route>
+                    <Route path='/signin'>
+                        <Login />
+                    </Route>
+                    <Route path='/signup'>
+                        <Register />
+                    </Route>
+                    <Route path="*">
+                        <PageNotFound />
+                    </Route>
+                </Switch>
+            </BrowserRouter>
         </div>
     )
 }

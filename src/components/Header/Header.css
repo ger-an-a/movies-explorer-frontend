@@ -13,6 +13,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    max-width: 1140px;
+    align-self: center;
+    width: 100%;
 }
 
 .header__logo {
@@ -25,9 +28,20 @@
     justify-content: center;
 }
 
+@media (max-width: 1200px) {
+    .header {
+        padding: 18px 30px;
+    }
+
+}
+
 @media (max-width: 550px) {
     .header__link {
         font-size: 10px;
+    }
+
+    .header {
+        padding: 18px 14px;
     }
 
 }

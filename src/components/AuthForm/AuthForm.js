@@ -7,7 +7,7 @@ function AuthForm(props) {
         <div className="auth-form">
             <form validate="false" className="auth-form__form" name={props.name} onSubmit={props.onSubmit}>
                 <div className="auth-form__container">
-                    <Link to="/" className="link">
+                    <Link to="/" className="link auth-form__logo">
                         <img src={logo} alt="Логотип." className="auth-form__logo" />
                     </Link>
                     <h1 className="auth-form__title">{props.title}</h1>

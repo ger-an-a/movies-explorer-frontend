@@ -1,4 +1,10 @@
 .nav-tab {
+    display: flex;
+    flex-direction: column;
+    background-color: #272727;
+}
+
+.nav-tab__menu {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -20,7 +26,7 @@
 }
 
 @media (max-width: 550px) {
-    .nav-tab {
+    .nav-tab__menu {
         column-gap: 24px;
     }
 

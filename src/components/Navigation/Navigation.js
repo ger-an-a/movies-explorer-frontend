@@ -8,6 +8,10 @@ function Navigation(props) {
         setVisible(!visible)
     }
 
+    function closeSidebar() {
+        setVisible(false)
+    }
+
     if (props.loggedIn)
         return (
             <nav className="navigation">
@@ -16,16 +20,16 @@ function Navigation(props) {
                         <NavLink to="/" className="link navigation__link navigation__link_type_menu navigation__link_type_main">Главная</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/movies" className="link navigation__link navigation__link_type_menu navigation__link_type_films" activeClassName="navigation__link_active">Фильмы</NavLink>
+                        <NavLink onClick={closeSidebar} to="/movies" className="link navigation__link navigation__link_type_menu navigation__link_type_films" activeClassName="navigation__link_active">Фильмы</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/saved-movies" className="link navigation__link navigation__link_type_menu navigation__link_type_films" activeClassName="navigation__link_active">Сохранённые фильмы</NavLink>
+                        <NavLink onClick={closeSidebar} to="/saved-movies" className="link navigation__link navigation__link_type_menu navigation__link_type_films" activeClassName="navigation__link_active">Сохранённые фильмы</NavLink>
                     </li>
                     <li>
                         <NavLink to="/profile" className="link navigation__link navigation__link_type_profile" >Аккаунт</NavLink>
                     </li>
                 </ul>
-                <button onClick={handleClick} className={`btn navigation__menu-btn ${visible ? "navigation__menu-btn_close" : ""}`} />
+                <button onClick={handleClick} className={`btn navigation__menu-btn ${visible ? "navigation__menu-btn_cross" : ""}`} />
             </nav>
         )
     else return (

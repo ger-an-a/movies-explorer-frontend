@@ -1,6 +1,6 @@
 function Footer() {
     return (
-        <footer className="footer content">
+        <footer className="footer">
             <h1 className="footer__text footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</h1>
             <div className="footer__container">
                 <p className="footer__text footer__copyright">&copy; {new Date().getFullYear()}</p>

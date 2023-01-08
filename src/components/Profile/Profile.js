@@ -7,8 +7,8 @@ const currentUser = { name: "Виталий", email: "pochta@yandex.ru" };
 
 function Profile(props) {
     return (
-        <section className="content profile">
-            <div className="profile__container">
+        <main className="content profile">
+            <div className="profile__container profile__container_margin">
                 <h1 className="profile__title">{`Привет, ${currentUser.name}!`}</h1>
                 <ul className="profile__info">
                     <li className="profile__info-item">
@@ -31,7 +31,7 @@ function Profile(props) {
                     <Link to="/signin" className="profile__link link">Выйти из аккаунта</Link >
                 </button>
             </div>
-        </section>
+        </main>
     )
 }
 export default Profile;

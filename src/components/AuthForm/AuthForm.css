@@ -3,10 +3,9 @@
     flex-direction: column;
     align-self: center;
     justify-content: center;
-    height: 100vh;
+    height: 100%;
     width: 396px;
-    padding: 15px 0;
-    box-sizing: border-box;
+    padding: 70px 0;
 }
 
 .auth-form__form {
@@ -64,19 +63,24 @@
     flex-direction: column;
 }
 
+@media(max-width: 768px) {
+    .auth-form {
+        padding: 232px 0 204px;
+    }
+
+    .auth-form__form {
+        height: 588px;
+    }
+}
+
 @media(max-width: 500px) {
     .auth-form {
-        height: 100vh;
         width: 260px;
         padding: 56px 0 30px;
     }
 
     .auth-form__form {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        height: 100%;
-        justify-content: space-between;
+        height: 694px;
     }
 
     .auth-form__logo {
