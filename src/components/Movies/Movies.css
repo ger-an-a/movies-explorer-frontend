@@ -1,0 +1,30 @@
+.movies {
+    margin-bottom: 90px;
+}
+
+.movies__btn {
+    padding: 0;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15px;
+    letter-spacing: 0px;
+    text-align: center;
+    color: #fff;
+    background-color: #2F2F2F;
+    height: 36px;
+    border: none;
+    border-radius: 6px;
+
+}
+
+@media(max-width:1000px) {
+    .movies {
+        width: 708px;
+    }
+}
+
+@media(max-width:750px) {
+    .movies {
+        width: calc(100% - 20px);
+    }
+}
