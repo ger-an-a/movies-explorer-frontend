@@ -45,6 +45,18 @@
     margin: 0 0 16px;
 }
 
+.auth-form__btn_inactive {
+    opacity: .2;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, .2);
+    color: #000;
+}
+
+.auth-form__btn_inactive:hover {
+    opacity: .2;
+    cursor: default;
+}
+
 .auth-form__text {
     font-style: normal;
     font-weight: 400;
@@ -61,6 +73,15 @@
 .auth-form__container {
     display: flex;
     flex-direction: column;
+}
+
+.auth-form__err-message {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #EE3465;
+    padding-bottom: 20px;
 }
 
 @media(max-width: 768px) {
