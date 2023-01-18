@@ -21,7 +21,6 @@ function SavedMovies(props) {
     }
 
     useEffect(() => {
-        console.log(props.savedList);
         props.reset();
         props.setShortFilms(false);
         setSearchQuery('');
@@ -38,7 +37,6 @@ function SavedMovies(props) {
     }, [props.slicedList])
 
     useEffect(() => {
-        console.log('as');
         setIsSearch(true);
         setIsValid(true);
         props.setMovieDeleted(false);

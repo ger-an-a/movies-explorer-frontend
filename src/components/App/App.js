@@ -72,9 +72,9 @@ function App() {
             Promise.all([mainApi.getMovies(), mainApi.getInfo()])
                 .then(([allSavedMovies, userData]) => {
                     setCurrentUser(userData.data);
-                    const userSavedMovies = allSavedMovies.data.filter((item) => {
+                    const userSavedMovies = allSavedMovies ? allSavedMovies.data.filter((item) => {
                         return item.owner === userData.data._id;
-                    });
+                    }) : [];
                     setSavedMoviesList(userSavedMovies);
                 })
                 .catch((err) => {

@@ -83,7 +83,6 @@ class MainApi {
     }
 
     createMovie(movie) {
-        console.log(movie);
         return fetch(`${this._baseUrl}/movies`, {
             method: 'POST',
             headers: this._headers,
@@ -102,7 +101,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-    baseUrl: 'https://api.mesto-ger.nomoredomains.club',
+    baseUrl: 'https://api.movies-ger.nomoredomains.club',
     headers: {
         'Content-Type': 'application/json',
     },
