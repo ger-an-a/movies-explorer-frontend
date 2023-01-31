@@ -1,3 +1,29 @@
+@keyframes loading_animation {
+    0% {
+        -webkit-transform: scale(0, 0);
+        -moz-transform: scale(0, 0);
+        -ms-transform: scale(0, 0);
+        -o-transform: scale(0, 0);
+        transform: scale(0, 0);
+    }
+
+    30% {
+        -webkit-transform: scale(0, 0);
+        -moz-transform: scale(0, 0);
+        -ms-transform: scale(0, 0);
+        -o-transform: scale(0, 0);
+        transform: scale(0, 0);
+    }
+
+    100% {
+        -webkit-transform: scale(1, 1);
+        -moz-transform: scale(1, 1);
+        -ms-transform: scale(1, 1);
+        -o-transform: scale(1, 1);
+        transform: scale(1, 1);
+    }
+}
+
 .movies-card {
     background-color: #222;
     overflow: hidden;
@@ -66,9 +92,14 @@
     transition: background-image .3s linear, transform .3s linear;
 }
 
+
 .movies-card__btn:hover {
     cursor: pointer;
     transform: scale(1.1, 1.1);
+}
+
+.movies-card__btn_loading {
+    animation: loading_animation 1s ease-in-out infinite;
 }
 
 .movies-card__btn_active {

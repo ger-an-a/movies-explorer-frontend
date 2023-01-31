@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { DURATION_SHORT_FILM, SMALL_WIDTH_LIMIT, BIG_STEP, MESSAGE_NOT_FOUND, MESSAGE_ERROR } from '../../utils/constants'
+
 export default function MoviesFilter({ component: Component, ...props }) {
 
     const [message, setMessage] = useState('');
@@ -9,20 +11,20 @@ export default function MoviesFilter({ component: Component, ...props }) {
     const [shortFilmsList, setShortFilmsList] = useState([]); //короткометражки
     const [firstIndex, setFirstIndex] = useState(0); //максимальное число изначально отображенных карточек
     const [index, setIndex] = useState(0); //последнее отображенное количество карточек
-    const [indexStep, setIndexStep] = useState(3); //шаг изменения количества карточек    
+    const [indexStep, setIndexStep] = useState(BIG_STEP); //шаг изменения количества карточек    
     const [width, setWidth] = useState(window.innerWidth);
     const [slicedList, setSlicedList] = useState([]); //отображенный результат поиска
 
     function onlyShortFilms(list) {
         const newList = list.filter((item) => {
-            return item.duration <= 40;
+            return item.duration <= DURATION_SHORT_FILM;
         });
         setShortFilmsList(newList);
     }
 
     function searchMovies(list, string) {
         const newList = string ? list.filter((item) => {
-            return item.nameRU.includes(string) || item.nameEN.includes(string)
+            return item.nameRU.toLowerCase().includes(string.toLowerCase()) || item.nameEN.toLowerCase().includes(string.toLowerCase())
         }) : list;
         setFiltredList(newList);
         return newList;
@@ -50,7 +52,7 @@ export default function MoviesFilter({ component: Component, ...props }) {
 
     function onBtnClick() {
         let newindex = index + indexStep;
-        if (width > 480) {
+        if (width > SMALL_WIDTH_LIMIT) {
             if (index % indexStep >= 1) newindex = newindex + indexStep - index % indexStep;
         }
         setIndex(newindex);
@@ -73,11 +75,11 @@ export default function MoviesFilter({ component: Component, ...props }) {
 
     function handleResponse() {
         setIndex(firstIndex);
-        setMessage('Ничего не найдено');
+        setMessage(MESSAGE_NOT_FOUND);
     }
 
     function handleError() {
-        setMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.');
+        setMessage(MESSAGE_ERROR);
     }
 
     return (

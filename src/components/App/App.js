@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { useHistory } from "react-router-dom";
 
 import Login from '../Login/Login';
 import Main from '../Main/Main';
@@ -15,21 +14,28 @@ import MoviesFilter from '../MoviesFilter/MoviesFilter';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import mainApi from "../../utils/MainApi";
+import Preloader from '../Preloader/Preloader';
+import ErrorPopup from '../ErrorPopup/ErrorPopup';
 
 function App() {
     const [currentUser, setCurrentUser] = React.useState({ name: 'Загрузка...', email: 'Загрузка...' });
     const [savedMoviesList, setSavedMoviesList] = React.useState([]);
     const [loggedIn, setLoggedIn] = React.useState(false);
     const [movieDeleted, setMovieDeleted] = React.useState(false);
-    const history = useHistory();
+    const [errorIsVisible, setErrorIsVisible] = React.useState(false);
+    const [loading, setLoading] = React.useState(true);
+    const [tokenCheked, setTokenCheked] = React.useState(false);
+    const [dataSaved, setDataSaved] = React.useState(false);
 
-    function handleSave(movie) {
+    function handleSave(movie, callback) {
         mainApi.createMovie(movie)
             .then((newCard) => {
                 setSavedMoviesList(savedMoviesList.concat(newCard.data));
+                callback();
             })
             .catch((err) => {
                 console.log(err);
+                setErrorIsVisible(true);
             });
     }
 
@@ -44,6 +50,7 @@ function App() {
             })
             .catch((err) => {
                 console.log(err);
+                setErrorIsVisible(true);
             })
     }
 
@@ -55,17 +62,28 @@ function App() {
                         .then((res) => {
                             setCurrentUser(res.data);
                             setLoggedIn(true);
+                            setTokenCheked(true);
                         })
+                } else {
+                    setLoggedIn(false);
+                    setTokenCheked(true);
                 }
             })
             .catch((err) => {
                 console.log(err);
+                setErrorIsVisible(true);
             })
     }
 
     useEffect(() => {
         tokenCheck();
     }, [])
+
+    useEffect(() => {
+        if (tokenCheked) if ((loggedIn && dataSaved) || !loggedIn) {
+            setLoading(false);
+        }
+    }, [tokenCheked, loggedIn, dataSaved])
 
     useEffect(() => {
         if (loggedIn) {
@@ -76,13 +94,12 @@ function App() {
                         return item.owner === userData.data._id;
                     }) : [];
                     setSavedMoviesList(userSavedMovies);
+                    setDataSaved(true);
                 })
                 .catch((err) => {
                     console.log(err);
+                    setErrorIsVisible(true);
                 });
-        } else {
-            setCurrentUser({ name: 'Загрузка...', email: 'Загрузка...' });
-            setSavedMoviesList([]);
         }
     }, [loggedIn])
 
@@ -90,45 +107,52 @@ function App() {
     return (
         <CurrentUserContext.Provider value={currentUser}>
             <div className='page'>
+                <ErrorPopup isVisible={errorIsVisible} setErrorIsVisible={setErrorIsVisible} />
                 <BrowserRouter>
-                    <Switch>
-                        <Route exact path='/'>
-                            <Header loggedIn={loggedIn} />
-                            <Main />
-                            <Footer />
-                        </Route>
-                        <ProtectedRoute path='/movies' loggedIn={loggedIn}>
-                            <Header loggedIn={loggedIn} />
-                            <MoviesFilter component={Movies} setMovieDeleted={setMovieDeleted} movieDeleted={movieDeleted} savedList={savedMoviesList} handleDelete={handleDelete} handleSave={handleSave} />
-                            <Footer />
-                        </ProtectedRoute>
-                        <ProtectedRoute path='/saved-movies' loggedIn={loggedIn}>
-                            <Header loggedIn={loggedIn} />
-                            <MoviesFilter component={SavedMovies} setMovieDeleted={setMovieDeleted} movieDeleted={movieDeleted} savedList={savedMoviesList} handleDelete={handleDelete} handleSave={handleSave} />
-                            <Footer />
-                        </ProtectedRoute>
-                        <ProtectedRoute path='/profile' loggedIn={loggedIn}>
-                            <Header loggedIn={loggedIn} />
-                            <Profile setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} />
-                        </ProtectedRoute>
-                        <Route path='/signin'>
-                            {loggedIn ? (
-                                <Redirect to="/movies" />
-                            ) : (
-                                <Login setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} />
-                            )}
-                        </Route>
-                        <Route path='/signup'>
-                            {loggedIn ? (
-                                <Redirect to="/movies" />
-                            ) : (
-                                <Register setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} />
-                            )}
-                        </Route>
+                    {loading ? (
                         <Route path="*">
-                            <PageNotFound />
+                            <Preloader className='preloader_main' />
                         </Route>
-                    </Switch>
+                    ) : (
+                        <Switch>
+                            <Route exact path='/'>
+                                <Header loggedIn={loggedIn} />
+                                <Main />
+                                <Footer />
+                            </Route>
+                            <ProtectedRoute path='/movies' loggedIn={loggedIn} loading={loading}>
+                                <Header loggedIn={loggedIn} />
+                                <MoviesFilter component={Movies} setMovieDeleted={setMovieDeleted} movieDeleted={movieDeleted} savedList={savedMoviesList} handleDelete={handleDelete} handleSave={handleSave} />
+                                <Footer />
+                            </ProtectedRoute>
+                            <ProtectedRoute path='/saved-movies' loggedIn={loggedIn} loading={loading}>
+                                <Header loggedIn={loggedIn} />
+                                <MoviesFilter component={SavedMovies} setMovieDeleted={setMovieDeleted} movieDeleted={movieDeleted} savedList={savedMoviesList} handleDelete={handleDelete} handleSave={handleSave} />
+                                <Footer />
+                            </ProtectedRoute>
+                            <ProtectedRoute path='/profile' loggedIn={loggedIn} loading={loading}>
+                                <Header loggedIn={loggedIn} />
+                                <Profile setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} />
+                            </ProtectedRoute>
+                            <Route path='/signin'>
+                                {!loggedIn ? (
+                                    <Login setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} />
+                                ) : (
+                                    <Redirect to="/movies" />
+                                )}
+                            </Route>
+                            <Route path='/signup'>
+                                {!loggedIn ? (
+                                    <Register setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} />
+                                ) : (
+                                    <Redirect to="/movies" />
+                                )}
+                            </Route>
+                            <Route path="*">
+                                <PageNotFound />
+                            </Route>
+                        </Switch>
+                    )}
                 </BrowserRouter>
             </div>
         </CurrentUserContext.Provider>

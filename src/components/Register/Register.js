@@ -3,48 +3,65 @@ import { useHistory } from "react-router-dom";
 
 import AuthForm from "../AuthForm/AuthForm";
 import FormInput from "../FormInput/FormInput";
-import { FormValidator } from "../../utils/FormValidator";
 import mainApi from "../../utils/MainApi";
+import { MESSAGE_ERROR409, MESSAGE_ERROR } from '../../utils/constants';
 
 
 function Register(props) {
+    const [errMessage, setErrMessage] = useState('');
     const [errMessageClass, setErrMessageClass] = useState('visually-hidden');
-    const [inputNameStatus, setInputNameStatus] = useState(false);
-    const [inputEmailStatus, setInputEmailStatus] = useState(false);
-    const [inputPasswordStatus, setInputPasswordStatus] = useState(false);
+    const [inputNameValid, setInputNameValid] = useState(false);
+    const [inputEmailValid, setInputEmailValid] = useState(false);
+    const [inputPasswordValid, setInputPasswordValid] = useState(false);
     const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [inputDisabled, setInputDisabled] = useState(false);
     const [btnText, setBtnText] = useState('Зарегистрироваться');
     const [btnStatus, setBtnStatus] = useState(true);
-    const [btnClass, setBtnClass] = useState('btn auth-form__btn auth-form__btn_inactive');
-    const formValidator = new FormValidator([inputNameStatus, inputEmailStatus, inputPasswordStatus], setBtnStatus, setBtnClass);
+    const [btnClass, setBtnClass] = useState('form__btn_inactive');
     const history = useHistory();
+
+    function setBtnInactive() {
+        setBtnStatus(true);
+        setBtnClass('form__btn_inactive');
+    }
+
+    function setBtnActive() {
+        setBtnStatus(false);
+        setBtnClass('');
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
         setBtnText('Регистрация...');
-        setBtnStatus(false);
-        setBtnClass('btn auth-form__btn auth-form__btn_inactive');
+        setBtnInactive();
         setInputDisabled(true);
         mainApi.postRegister(email, password, userName)
             .then((data) => {
-                props.setLoggedIn(true);
-                // props.setUserEmail(email);
+                console.log(data);
+                props.setCurrentUser({ email: email, name: userName });
                 setEmail('');
                 setPassword('');
                 setUserName('');
                 setInputDisabled(false);
                 setBtnText('Зарегистрироваться');
-                props.setCurrentUser({ email, name: userName });
-                history.push('/movies');
+                mainApi.postLogin(email, password)
+                    .then((data) => {
+                        props.setLoggedIn(true);
+                        history.push('/movies');
+                        return data;
+                    })
                 return data;
             })
-            .catch(() => {
-                setErrMessageClass('auth-form__err-message');
-                //props.setLoggedIn(false);
-                //formValidator.disabledButtonState();
+            .catch((err) => {
+                if (err.code === 409) setErrMessage(MESSAGE_ERROR409)
+                else {
+                    setErrMessage(MESSAGE_ERROR);
+                    setBtnActive()
+                }
+                props.setLoggedIn(false);
+                setErrMessageClass('form__err-message');
                 setBtnText('Зарегистрироваться');
                 setInputDisabled(false);
                 return;
@@ -52,16 +69,20 @@ function Register(props) {
     }
 
     useEffect(() => {
-        formValidator.isValid();
-        setErrMessageClass('visually-hidden');
-    }, [inputNameStatus, inputEmailStatus, inputPasswordStatus]);
+        if (inputNameValid && inputEmailValid && inputPasswordValid) {
+            setBtnActive()
+            setErrMessageClass('visually-hidden');
+        } else {
+            setBtnInactive()
+        }
+    }, [inputNameValid, inputEmailValid, inputPasswordValid, userName, email, password]);
 
     return (
-        <AuthForm errMessageClass={errMessageClass} onSubmit={handleSubmit} link="/signin" linkText="Войти" questionText="Уже зарегистрированы?" title="Добро пожаловать!" name="register" btn={btnText} btnClass={btnClass} btnStatus={btnStatus} children={
+        <AuthForm errMessage={errMessage} errMessageClass={errMessageClass} onSubmit={handleSubmit} link="/signin" linkText="Войти" questionText="Уже зарегистрированы?" title="Добро пожаловать!" name="register" btn={btnText} btnClass={btnClass} btnStatus={btnStatus} children={
             <>
-                <FormInput disabled={inputDisabled} setFormErrClass={setErrMessageClass} setInputValue={setUserName} inputValue={userName} setInputStatus={setInputNameStatus} text="Имя" />
-                <FormInput disabled={inputDisabled} setFormErrClass={setErrMessageClass} setInputValue={setEmail} inputValue={email} setInputStatus={setInputEmailStatus} type="email" text="E-mail" />
-                <FormInput disabled={inputDisabled} setFormErrClass={setErrMessageClass} setInputValue={setPassword} inputValue={password} setInputStatus={setInputPasswordStatus} type="password" text="Пароль" />
+                <FormInput disabled={inputDisabled} setInputValue={setUserName} inputValue={userName} setInputValid={setInputNameValid} text="Имя" />
+                <FormInput disabled={inputDisabled} setInputValue={setEmail} inputValue={email} setInputValid={setInputEmailValid} type="email" text="E-mail" />
+                <FormInput disabled={inputDisabled} setInputValue={setPassword} inputValue={password} setInputValid={setInputPasswordValid} type="password" text="Пароль" />
             </>}
         />
     )

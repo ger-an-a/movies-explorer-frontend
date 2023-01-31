@@ -1,9 +1,11 @@
+import { VALIDATION_MESSAGE_NAME, VALIDATION_MESSAGE_EMAIL } from './constants';
+
 export class InputValidator {
-  constructor(setInputClass, setErrorMessageClass, setErrMessage, setInputStatus) {
+  constructor(setInputClass, setErrorMessageClass, setErrMessage, setInputValid) {
     this._setInputClass = setInputClass;
     this._setErrorMessageClass = setErrorMessageClass;
     this._setErrMessage = setErrMessage;
-    this._setInputStatus = setInputStatus;
+    this._setInputValid = setInputValid;
   }
 
   _showInputError(errorMessage) {
@@ -20,11 +22,17 @@ export class InputValidator {
 
   isValid(e) {
     if (!e.target.validity.valid) {
-      this._showInputError(e.target.validationMessage);
-      this._setInputStatus(false);
+      let message = e.target.validationMessage;
+      if (!e.target.validity.valueMissing) {
+        if (e.target.name === 'userName') {
+          message = VALIDATION_MESSAGE_NAME;
+        } else if (e.target.name === 'email') message = VALIDATION_MESSAGE_EMAIL;
+      }
+      this._showInputError(message);
+      this._setInputValid(false);
     } else {
       this.hideInputError();
-      this._setInputStatus(true);
+      this._setInputValid(true);
     }
   };
 }

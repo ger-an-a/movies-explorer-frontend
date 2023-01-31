@@ -7,13 +7,14 @@ function MoviesCard(props) {
     const imgUrl = props.img.url ? `https://api.nomoreparties.co/${props.img.url}` : props.img;
 
     function onClick() {
+        setBtnClass('movies-card__btn movies-card__btn_active movies-card__btn_loading');
         if (!isSaved) {
-            setBtnClass('movies-card__btn movies-card__btn_active');
             const movieData = props.movieData;
             movieData.image = imgUrl;
-            props.handleSave(movieData);
+            props.handleSave(movieData, () => {
+                setBtnClass('movies-card__btn movies-card__btn_active');
+            });
         } else {
-            setBtnClass('movies-card__btn');
             props.handleDelete(movie._id);
         }
     }
