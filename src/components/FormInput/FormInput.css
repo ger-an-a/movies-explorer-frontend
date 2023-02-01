@@ -57,3 +57,7 @@
 .form-input__input:focus:-ms-input-placeholder {
     color: transparent
 }
+
+.form-input__input_type_error {
+    border: solid 1px #EE3465;
+}

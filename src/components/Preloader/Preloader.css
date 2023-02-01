@@ -50,6 +50,12 @@
     height: 100%;
     z-index: 10;
     padding: 20px;
+    box-sizing: border-box;
+}
+
+.preloader_main {
+    width: 100vw;
+    height: 100vh;
 }
 
 .preloader__container {

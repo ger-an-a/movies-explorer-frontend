@@ -17,7 +17,17 @@
 
 .profile__container_margin {
     margin-bottom: calc(220px - 33px);
+}
 
+.profile__container_edit {
+    margin-top: 120px;
+}
+
+.profile__form {
+    margin: 0 0 -115px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 }
 
 .profile__title {
@@ -73,7 +83,7 @@
     padding: 0;
 }
 
-.profile__link {
+.profile__btn-signout {
     color: #EE3465;
 }
 

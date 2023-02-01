@@ -1,0 +1,17 @@
+export const REGEX_NAME = '[-a-zA-Zа-яА-ЯёЁ ]{2,40}';
+export const REGEX_EMAIL = '[A-Za-z0-9]+[A-Za-z0-9._%+-]*[A-Za-z0-9]+@[A-Za-z0-9]+[A-Za-z0-9-.]*[A-Za-z0-9]+[.][A-Za-z]{2,4}$';
+export const VALIDATION_MESSAGE_NAME = 'Имя должно содержать от 2 до 40 символов. Только буквы, пробел или дефис.';
+export const VALIDATION_MESSAGE_EMAIL = 'Введите корректный email';
+export const DURATION_SHORT_FILM = 40;
+export const BIG_WIDTH_LIMIT = 1279;
+export const SMALL_WIDTH_LIMIT = 480;
+export const BIG_STEP = 3;
+export const SMALL_STEP = 2;
+export const MAX_CARDS_BIG_SCREEN = 12;
+export const MAX_CARDS_MEDIUM_SCREEN = 8;
+export const MAX_CARDS_SMALL_SCREEN = 5;
+export const MESSAGE_NOT_FOUND = 'Ничего не найдено.';
+export const MESSAGE_ERROR409 = 'Этот E-mail уже занят.';
+export const MESSAGE_ERROR401 = 'Неверный E-mail или пароль.'
+export const MESSAGE_ERROR = 'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.';
+export const MESSAGE_ERROR_EXIT = 'Произошла ошибка. Попробовать снова?';
