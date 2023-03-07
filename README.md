@@ -8,6 +8,4 @@
 
 # [Ссылка на макет.](https://disk.yandex.ru/d/R7ehjRG9yME3zQ)
 
-# [Ссылка на фронтенд](https://movies-ger.nomoredomains.club/signin)
-
-# [Ссылка на пул реквест.](https://github.com/ger-an-a/movies-explorer-frontend/pull/2)
+# [Ссылка на сервис](https://movies-ger.nomoredomains.club/signin)
